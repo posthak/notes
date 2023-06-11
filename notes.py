@@ -14,7 +14,7 @@ def random_number():
     return ''.join(random.choices(string.ascii_letters, k=5))
 
 
-def AddNote(fileName, title, body):
+def add_note(fileName, title, body):
     users = json.load(open(fileName))
     users.append({
         "id": random_number(),
@@ -29,7 +29,7 @@ def AddNote(fileName, title, body):
     print('Заметка успешно сохранена')
 
 
-def FindNoteByDate(fileName, date):
+def find_note_by_date(fileName, date):
     status = False
     list = json.load(open(fileName))
     listNew = []
@@ -48,7 +48,7 @@ def FindNoteByDate(fileName, date):
         print('Заметка не найдена')
 
 
-def DelNote(fileName, id):
+def del_note(fileName, id):
     status = False
     list = json.load(open(fileName))
     listNew = []
@@ -71,7 +71,7 @@ def DelNote(fileName, id):
         print('Заметка не найдена')
 
 
-def CheckNote(fileName, id):
+def check_note(fileName, id):
     status = False
     list = json.load(open(fileName))
     for d in list:
@@ -80,7 +80,7 @@ def CheckNote(fileName, id):
     return status
 
 
-def EditNote(fileName, id, body):
+def edit_note(fileName, id, body):
     list = json.load(open(fileName))
     for d in list:
         if d["id"] == id:
@@ -92,7 +92,7 @@ def EditNote(fileName, id, body):
     print('Заметка изменена')
 
 
-def DisplayAllNote(name):
+def display_all_note(name):
     with open(name, "r") as file:
         list = json.load(file)
         for i in sorted(list, key=lambda i: strptime(i["date"], "%Y-%m-%d")):
@@ -123,21 +123,21 @@ while True:
     if menu == 1:
         title = input("Введите заголовок заметки: ")
         body = input("Введите тело заметки: ")
-        AddNote(fName, title, body)
+        add_note(fName, title, body)
     elif menu == 2:
-        DisplayAllNote(fName)
+        display_all_note(fName)
     elif menu == 3:
         text = input("Введите дату yyyy-mm-dd: ")
-        FindNoteByDate(fName, text)
+        find_note_by_date(fName, text)
     elif menu == 4:
         id = input("Введите id заметки: ")
-        if CheckNote(fName, id):
+        if check_note(fName, id):
             body = input("Введите тело новой заметки: ")
-            EditNote(fName, id, body)
+            edit_note(fName, id, body)
         else:
             print('Заметка не найдена')
     elif menu == 5:
         id = input("Введите id заметки: ")
-        DelNote(fName, id)
+        del_note(fName, id)
     elif menu == 6:
         quit()
